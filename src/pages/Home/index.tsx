@@ -1,7 +1,7 @@
 import React from 'react';
 import LogoVertical from '../../assets/logo-vertical.svg'
 import FetchUser from '../../components/FetchUser';
-// import { Container } from './styles';
+import './styles.scss';
 
 const Home: React.FC = () => {
   return (

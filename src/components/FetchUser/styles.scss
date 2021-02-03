@@ -1,0 +1,46 @@
+.fetch-user {
+  button,
+  input {
+    width: 100%;
+
+  }
+  
+  input {
+    // border: 0 0 2px 0;
+    margin-bottom: 59px;
+    border: 0;
+    background-color: transparent;
+    border-bottom: 4px solid #8752CC;
+    padding-bottom: 10px;
+    font-size: 18px;
+    text-align: center;
+    color: #535353;
+    transition: border-color .3s ease;
+    
+    &:active,
+    &:focus {
+      outline: none;
+      border-color: darken($color: #8752cc, $amount: 10);
+    }
+  }
+
+  button {
+    padding: 12px;
+    background: #8752CC;
+    font-weight: bold;
+    font-size: 18px;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 0;
+    transition: background .3s ease;
+    svg {
+      margin-left: 10px;
+      max-width: 16px;
+      vertical-align: middle;
+    }
+    &:hover {
+      background-color: darken($color: #8752cc, $amount: 10);
+    }
+  }
+}
