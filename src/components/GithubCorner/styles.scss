@@ -1,0 +1,14 @@
+.github-corner {
+  position: fixed;
+  top: 0;
+  right: 0;
+  // display: block;
+  &:hover {
+    .github-corner__background {
+      transition: fill .3s ease;
+      fill: darken($color: #8752CC, $amount: 10) !important;
+      
+    }
+  }
+
+}
