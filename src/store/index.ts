@@ -1,9 +1,10 @@
-import { createStore } from "redux";
-// armazena estado e pode manipulá-lo
-function reducer() {
-  return []
-}
+import { applyMiddleware, createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
+import rootReducer from "./rootReducer";
 
-const store = createStore(reducer)
+const Store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 
-export default store
+export type RootStore = ReturnType<typeof rootReducer>
+
+export default Store

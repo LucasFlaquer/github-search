@@ -1,14 +1,20 @@
 import React, { FormEvent, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootStore } from '../../store';
+import { getUser } from '../../store/Users/actions';
 import './styles.scss'
 // import { Container } from './styles';
 
 const FetchUser: React.FC = () => {
   const [username, setUserName] = useState('')
+  const dispatch = useDispatch()
+  const state = useSelector((state:RootStore)=> state.UserReducer)
 
-  function handleFetchUserSubmit(event: FormEvent) {
+  async function handleFetchUserSubmit(event: FormEvent) {
     event.preventDefault()
-    console.log('entrei na funcao')
+    await dispatch(getUser(username))
     console.log(username)
+    console.log(state)
   }
 
   return (
