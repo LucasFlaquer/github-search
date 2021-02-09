@@ -8,33 +8,38 @@ import FollowingIcon from '../../assets/following.svg'
 import FollowersIcon from '../../assets/followers.svg'
 import StarsIcon from '../../assets/stars.svg'
 import RepositoriesIcon from '../../assets/repositories.svg'
+import { useSelector } from 'react-redux';
+import { RootStore } from '../../store';
 
 const UserDetail: React.FC = () => {
-  return (
+
+  const user = useSelector((state:RootStore)=> state.UserReducer.data)
+  if(user)
+    return (
     <>
       <Header/>
       <div className="about-container">
         <div className="user">
           <div className="user__header">
             <figure className="user__avatar">
-              <img src="https://avatars.githubusercontent.com/u/22601978?v=4" alt="nome do usuario"/>
+              <img src="https://avatars.githubusercontent.com/u/22601978?v=4" alt={user.name}/>
             </figure>
             <div className="user__info">
-              <h1 className="user__title">Lucas Flaquer</h1>
-              <span className="user__twitter">@twitter_url</span>
+              <h1 className="user__title">{user.name}</h1>
+              <span className="user__twitter">{`@${user.twitter}`}</span>
               <p className="user__location">
-                <span><img src={LocationIcon} alt="marker"/> São Paulo - SP </span>
-                <span><img src={WorkIcon} alt=""/> Google</span>
+                <span><img src={LocationIcon} alt="marker"/>{user.location}</span>
+                <span><img src={WorkIcon} alt=""/>{user.company}</span>
               </p>
               <p className="user__stars">
-                <span><img src={FollowingIcon} alt=""/> 123</span>
-                <span><img src={FollowersIcon} alt=""/> 87</span>
-                <span><img src={StarsIcon} alt=""/> 39</span>
+                <span><img src={FollowingIcon} alt=""/>{user.following}</span>
+                <span><img src={FollowersIcon} alt=""/>{user.followers}</span>
+                <span><img src={StarsIcon} alt=""/>10</span>
               </p>
             </div>
             <div className="user__total-repos">
               <span>Total Repositorios</span>
-              <p><img src={RepositoriesIcon} alt=""/> 48</p>
+              <p><img src={RepositoriesIcon} alt=""/>{user.totalRepos}</p>
             </div>
           </div>
 
@@ -44,6 +49,7 @@ const UserDetail: React.FC = () => {
       </div>
     </>
   )
+  return <div></div>
 }
 
 export default UserDetail;

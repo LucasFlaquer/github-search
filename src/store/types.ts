@@ -20,6 +20,16 @@ export interface Repository {
 export interface User {
   id: number
   name:string
+  avatar: string
+  url: string
+  followers: number
+  following: number
+  bio: string
+  twitter: string
+  company: string
+  location: string
+  username:string
+  totalRepos:number
   repositories: Repository[]
 }
 

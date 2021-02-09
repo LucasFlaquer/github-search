@@ -1,11 +1,13 @@
 import React, { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { RootStore } from '../../store';
 import { getUser } from '../../store/Users/actions';
 import './styles.scss'
 // import { Container } from './styles';
 
 const FetchUser: React.FC = () => {
+  const history = useHistory()
   const [username, setUserName] = useState('')
   const dispatch = useDispatch()
   const state = useSelector((state:RootStore)=> state.UserReducer)
@@ -13,6 +15,7 @@ const FetchUser: React.FC = () => {
   async function handleFetchUserSubmit(event: FormEvent) {
     event.preventDefault()
     await dispatch(getUser(username))
+    history.push('/sobre')
     console.log(username)
     console.log(state)
   }
