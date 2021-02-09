@@ -1,5 +1,16 @@
+@import "./scss/variables";
+
 body {
-  background-color: #232324;
+  background-color: $background;
   height: 100vh;
   font-family: 'Roboto', sans-serif;
+
+  p,span {
+    color: $font-color;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+  }
 }
