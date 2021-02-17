@@ -1,10 +1,13 @@
 import React from 'react';
 import Routes from './routes';
 import './App.scss'
+import GlobalContext from './context';
 
 function App() {
   return (
-    <Routes/>
+    <GlobalContext>
+      <Routes />
+    </GlobalContext>
   );
 }
 
