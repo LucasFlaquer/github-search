@@ -1,13 +1,13 @@
 import React, { FormEvent, useContext, useState } from 'react';
 import userContext, { UserType } from '../../context/user';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { fetchUser } from '../../services/fetchUser';
 
 import './styles.scss'
 
 const FetchUser: React.FC = () => {
   const { setState, state } = useContext(userContext)
-  // const history = useHistory()
+  const history = useHistory()
   const [username, setUserName] = useState('')
 
 
@@ -30,8 +30,8 @@ const FetchUser: React.FC = () => {
       twitter_username,
       url
     } = await fetchUser(username) as UserType
-
     setState({
+      ...state,
       avatar_url,
       bio,
       company,
@@ -46,9 +46,8 @@ const FetchUser: React.FC = () => {
       total_repos,
       twitter_username,
       url
-    })
-    console.log(state)
-
+    });
+    history.push('/sobre')
   }
 
   return (
