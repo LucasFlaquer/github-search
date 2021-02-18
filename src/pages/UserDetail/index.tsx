@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import Header from '../../components/Header';
@@ -27,7 +27,7 @@ const UserDetail: React.FC = () => {
   let { username } = useParams<ParamTypes>()
   const history = useHistory()
 
-  async function getUserData() {
+  const getUserData = useCallback(async ()=> {
     try {
       const user = await getUser(username)
       const stars = await getStarred(username)
@@ -41,10 +41,12 @@ const UserDetail: React.FC = () => {
     } catch (error) {
       history.push('/')
     }
-  }
+
+  }, [history,setState, username])
   useEffect(() => {
     getUserData()
-  }, [])
+  }, [getUserData])
+
   return (
     <>
       <Header />
