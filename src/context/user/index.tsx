@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { createContext, Dispatch, SetStateAction, useState } from "react";
 
 export type UserType = {
   name: string
@@ -8,6 +8,7 @@ export type UserType = {
   company: string
   followers: number
   following: number
+  starred: number
   html_url: string
   location: string
   login: string
@@ -31,6 +32,7 @@ const DEFAULT_VALUE: PropsUserContext = {
     company: '',
     followers: 0,
     following: 0,
+    starred: 0,
     html_url: '',
     id: -1,
     location: '',

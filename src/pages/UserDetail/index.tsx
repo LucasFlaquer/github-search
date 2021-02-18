@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import Header from '../../components/Header';
 import userContext from '../../context/user';
@@ -13,20 +13,50 @@ import StarsIcon from '../../assets/stars.svg'
 import RepositoriesIcon from '../../assets/repositories.svg'
 import ForksIcos from '../../assets/forks.svg'
 import LanguageIcon from '../../assets/language.svg'
+import { getUser } from '../../services/getUser';
+import { getStarred } from '../../services/getStarred';
 
 interface ParamTypes {
   username: string
 }
 
 const UserDetail: React.FC = () => {
-  const { state: user } = useContext(userContext)
-
+  const { state: user, setState } = useContext(userContext)
   let { username } = useParams<ParamTypes>()
+  const history = useHistory()
+
+  async function setStared() {
+    const length = await getStarred(username)
+    setState({ ...user, starred: length })
+  }
+  async function getUserData() {
+    try {
+      const user = await getUser(username)
+      setState(user)
+
+    } catch (error) {
+      history.push('/')
+    }
+  }
+  async function fetchReposList() {
+
+  }
+
   useEffect(() => {
     console.log(username, user.id)
-    //se id for == -1
-    //buscar ususario
-    //se invalido redirecionar para home
+
+    if (user.id === -1) {
+      getUserData()
+      // getUser(username).then(response => {
+      //   setState(response)
+      // }).catch(error => {
+      //   history.push('/')
+      // })
+    }
+    setStared()
+    fetchReposList()
+
+
   }, [])
   return (
     <>
@@ -35,26 +65,26 @@ const UserDetail: React.FC = () => {
         <div className="user">
           <div className="user__header">
             <figure className="user__avatar">
-              <img src="https://avatars.githubusercontent.com/u/22601978?v=4" alt='Lucas Flaquer' />
+              <img src={user.avatar_url} alt={user.name} />
             </figure>
             <div className="user__info">
-              <h1 className="user__title">Lucas Flaquer</h1>
+              <h1 className="user__title">{user.name}</h1>
               <p className="user__twitter">@flaquer_</p>
 
 
               <p className="user__location">
-                <span><img src={LocationIcon} alt="marker" />Sorocaba | SP</span>
-                <span><img src={WorkIcon} alt="" />CRB Construtora</span>
+                <span><img src={LocationIcon} alt="marker" />{user.location}</span>
+                <span><img src={WorkIcon} alt="" />{user.company}</span>
               </p>
               <p className="user__stars">
-                <span><img src={FollowingIcon} alt="" />10</span>
-                <span><img src={FollowersIcon} alt="" />50</span>
-                <span><img src={StarsIcon} alt="" />10</span>
+                <span><img src={FollowingIcon} alt="" />{user.following}</span>
+                <span><img src={FollowersIcon} alt="" />{user.followers}</span>
+                <span><img src={StarsIcon} alt="" />{user.starred}</span>
               </p>
             </div>
             <div className="user__total-repos">
               <span>Total Repositorios</span>
-              <p><img src={RepositoriesIcon} alt="" />48</p>
+              <p><img src={RepositoriesIcon} alt="" />{user.total_repos}</p>
             </div>
           </div>
 

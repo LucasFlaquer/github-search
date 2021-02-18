@@ -1,12 +1,13 @@
 import React, { FormEvent, useContext, useState } from 'react';
-import userContext, { UserType } from '../../context/user';
+import userContext from '../../context/user';
 import { useHistory } from 'react-router-dom';
-import { fetchUser } from '../../services/fetchUser';
+
 
 import './styles.scss'
+import { getUser } from '../../services/getUser';
 
 const FetchUser: React.FC = () => {
-  const { setState, state } = useContext(userContext)
+  const { setState } = useContext(userContext)
   const history = useHistory()
   const [username, setUserName] = useState('')
 
@@ -14,39 +15,8 @@ const FetchUser: React.FC = () => {
 
   async function handleFetchUserSubmit(event: FormEvent) {
     event.preventDefault()
-    const {
-      avatar_url,
-      bio,
-      company,
-      followers,
-      following,
-      html_url,
-      id,
-      location,
-      login,
-      name,
-      repos_url,
-      total_repos,
-      twitter_username,
-      url
-    } = await fetchUser(username) as UserType
-    setState({
-      ...state,
-      avatar_url,
-      bio,
-      company,
-      followers,
-      following,
-      html_url,
-      id,
-      location,
-      login,
-      name,
-      repos_url,
-      total_repos,
-      twitter_username,
-      url
-    });
+    const user = await getUser(username)
+    setState(user)
     history.push(`/sobre/${username}`)
   }
 
