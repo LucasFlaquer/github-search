@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import Header from '../../components/Header';
-import userContext from '../../context/user';
+import userContext, { Repository, UserType } from '../../context/user';
 
 import './styles.scss';
 import LocationIcon from '../../assets/location.svg'
@@ -15,48 +15,35 @@ import ForksIcos from '../../assets/forks.svg'
 import LanguageIcon from '../../assets/language.svg'
 import { getUser } from '../../services/getUser';
 import { getStarred } from '../../services/getStarred';
+import { getRepos } from '../../services/getRepos';
 
 interface ParamTypes {
   username: string
 }
+
 
 const UserDetail: React.FC = () => {
   const { state: user, setState } = useContext(userContext)
   let { username } = useParams<ParamTypes>()
   const history = useHistory()
 
-  async function setStared() {
-    const length = await getStarred(username)
-    setState({ ...user, starred: length })
-  }
   async function getUserData() {
     try {
       const user = await getUser(username)
-      setState(user)
-
+      const stars = await getStarred(username)
+      const repos = await getRepos(username)
+      const state:UserType = {...user, starred:stars, repos}
+      setState(state)
+      console.log('finished setState');
+      
+      
+      
     } catch (error) {
       history.push('/')
     }
   }
-  async function fetchReposList() {
-
-  }
-
   useEffect(() => {
-    console.log(username, user.id)
-
-    if (user.id === -1) {
-      getUserData()
-      // getUser(username).then(response => {
-      //   setState(response)
-      // }).catch(error => {
-      //   history.push('/')
-      // })
-    }
-    setStared()
-    fetchReposList()
-
-
+    getUserData()
   }, [])
   return (
     <>
@@ -89,54 +76,21 @@ const UserDetail: React.FC = () => {
           </div>
 
           <div className="user__repos">
-            <div className="repo">
-              <h3 className="repo__name">Repositorio</h3>
-              <p className="repo__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, asperiores?</p>
-              <ul className="repo__data">
-                <li><img src={StarsIcon} alt="Stars" /> 12</li>
-                <li><img src={ForksIcos} alt="Forks" /> 12</li>
-                <li><img src={LanguageIcon} alt="Language" /> 12</li>
-              </ul>
-            </div>
-            <div className="repo">
-              <h3 className="repo__name">Repositorio</h3>
-              <p className="repo__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, asperiores?</p>
-              <ul className="repo__data">
-                <li><img src={StarsIcon} alt="Stars" /> 12</li>
-                <li><img src={ForksIcos} alt="Forks" /> 12</li>
-                <li><img src={LanguageIcon} alt="Language" /> 12</li>
-              </ul>
-            </div>
-            <div className="repo">
-              <h3 className="repo__name">Repositorio</h3>
-              <p className="repo__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, asperiores?</p>
-              <ul className="repo__data">
-                <li><img src={StarsIcon} alt="Stars" /> 12</li>
-                <li><img src={ForksIcos} alt="Forks" /> 12</li>
-                <li><img src={LanguageIcon} alt="Language" /> 12</li>
-              </ul>
-            </div>
-            <div className="repo">
-              <h3 className="repo__name">Repositorio</h3>
-              <p className="repo__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, asperiores?</p>
-              <ul className="repo__data">
-                <li><img src={StarsIcon} alt="Stars" /> 12</li>
-                <li><img src={ForksIcos} alt="Forks" /> 12</li>
-                <li><img src={LanguageIcon} alt="Language" /> 12</li>
-              </ul>
-            </div>
-            <div className="repo">
-              <h3 className="repo__name">Repositorio</h3>
-              <p className="repo__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, asperiores?</p>
-              <ul className="repo__data">
-                <li><img src={StarsIcon} alt="Stars" /> 12</li>
-                <li><img src={ForksIcos} alt="Forks" /> 12</li>
-                <li><img src={LanguageIcon} alt="Language" /> 12</li>
-              </ul>
-            </div>
+          {user.repos.map((repo:Repository)=> {
+            return (
+              <a href={repo.html_url} className="repo" key={repo.id}>
+                <h3 className="repo__name">{repo.name}</h3>
+                <p className="repo__description">{repo.description}</p>
+                <ul className="repo__data">
+                  <li><img src={StarsIcon} alt="Stars" /> {repo.stars}</li>
+                  <li><img src={ForksIcos} alt="Forks" /> {repo.forks}</li>
+                  <li><img src={LanguageIcon} alt="Language" /> {repo.language}</li>
+                </ul>
+              </a>
+            )
+          })}
           </div>
         </div>
-
       </div>
     </>
   )

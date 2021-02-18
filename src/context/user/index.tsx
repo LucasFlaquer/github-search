@@ -1,5 +1,15 @@
 import React, { createContext, Dispatch, SetStateAction, useState } from "react";
 
+export type Repository = {
+  id: number
+  name: string
+  description:string
+  forks:number
+  language: string
+  stars: number,
+  html_url:string
+}
+
 export type UserType = {
   name: string
   id: number
@@ -15,7 +25,8 @@ export type UserType = {
   total_repos: number
   repos_url: string
   twitter_username: string
-  url: string
+  url: string,
+  repos: Repository[]
 }
 
 
@@ -41,7 +52,8 @@ const DEFAULT_VALUE: PropsUserContext = {
     repos_url: '',
     total_repos: 0,
     twitter_username: '',
-    url: ''
+    url: '',
+    repos: []
   },
   setState: () => { }
 }

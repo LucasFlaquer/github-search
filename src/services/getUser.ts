@@ -14,10 +14,10 @@ export async function getUser(username: string) {
     login,
     name,
     repos_url,
-    total_repos,
+    public_repos:total_repos,
     twitter_username,
     url
-  } = await fetchUser(username) as UserType
+  } = await fetchUser(username)
   const user: UserType = {
     avatar_url,
     bio,
@@ -34,6 +34,7 @@ export async function getUser(username: string) {
     twitter_username,
     url,
     starred: 0,
+    repos: []
   }
   return user
 }
