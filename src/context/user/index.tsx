@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, SetStateAction, useState } from "react";
+import React, { createContext, Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export type UserType = {
   name: string
@@ -48,6 +48,10 @@ const userContext = createContext<PropsUserContext>(DEFAULT_VALUE)
 
 const UserContextProvider: React.FC = ({ children }) => {
   const [state, setState] = useState(DEFAULT_VALUE.state)
+  // useEffect(() => {
+
+  // }, [])
+
   return <userContext.Provider value={{ state, setState }}>{children}</userContext.Provider>
 }
 

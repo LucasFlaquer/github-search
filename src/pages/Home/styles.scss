@@ -6,9 +6,16 @@
 }
 
 .home-box {
+  max-width: 300px;
   img {
     display: block;
     margin: 0 auto 50px;
     
+  }
+}
+
+@media(min-width:575px) {
+  .home-box {
+    max-width: 330px;
   }
 }

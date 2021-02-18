@@ -15,7 +15,7 @@
     justify-content: space-around;
     max-width: 700px;
     margin: 0 auto;
-    
+    flex-direction: column;
     
   }
   &__avatar {
@@ -30,8 +30,12 @@
   }
   &__info {
     p {
+      text-align: center;
       span {
-        margin-right: 10px;
+        &:not(:last-child) {
+          margin-right: 10px;
+
+        } 
         img {
           display: inline-block;
           margin-right: 5px;
@@ -47,6 +51,20 @@
     font-size: 24px;
     line-height: 28px;
     margin-bottom: 0;
+    text-align: center;
+  }
+  &__twitter {
+    margin-top: 0;
+    text-align: center;
+  }
+  &__location {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    span {
+      display: inline-block;
+      margin-bottom: 0.5em;
+    }
   }
   &__total-repos {
     padding: 15px;
@@ -67,7 +85,89 @@
       }
     }
   }
+  &__repos {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(1, 3fr);
+    gap: 2.5rem;
+    
+    
+    .repo {
+      background-color: $box-color;
+      padding: 1.5rem;
+      position: relative;
+      border-radius: 5px;
+      min-height: 15rem;
+      &__name {
+        margin-top: 0;
+        margin-bottom: 0.8rem;
+        color: $font-color;
+      }
+      &__description {
+        font-size: .9em;
+        line-height: 1.2em;
+      }
+      &__data {
+        position: absolute;
+        bottom: 1.2rem;
+        left: 1.5rem;
+        width: 100%;
+        // display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        
+        li {
+          display: inline-block;
+          color: $font-color;
+          img {
+            vertical-align: baseline;
+            
+          }
+          &:not(:last-child) {
+            margin-right: 1.2em;
+          }
+        }
+        
+      }
+    }
+  }
 
 
 
+}
+
+@media(min-width:700px) {
+  .user {
+    &__header {
+      flex-direction: row;
+    }
+    &__info {
+      p {
+        text-align: left;
+      }
+    }
+    &__title {
+      text-align: left;
+    }
+    &__twitter {
+      text-align: left;
+    }
+    &__location {
+      display: block;
+    }
+    &__repos {
+      grid-template-columns: repeat(2, 1fr);
+      .repo {
+        min-height: 10rem;
+      }
+    }
+  }
+}
+@media(min-width:1200px) {
+  .user {
+    &__repos {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
 }

@@ -47,7 +47,7 @@ const FetchUser: React.FC = () => {
       twitter_username,
       url
     });
-    history.push('/sobre')
+    history.push(`/sobre/${username}`)
   }
 
   return (
