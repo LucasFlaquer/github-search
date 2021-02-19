@@ -59,7 +59,7 @@ const UserDetail: React.FC = () => {
             <div className="user__info">
               <h1 className="user__title">{user.name}</h1>
               <p className="user__twitter">
-                <a href={`https://twitter.com/${user.twitter_username}`} target="_blank">
+                <a href={`https://twitter.com/${user.twitter_username}`} target="_blank" rel="noreferrer">
                   {`@${user.twitter_username}`}
                 </a>
               </p>
