@@ -27,22 +27,22 @@ const UserDetail: React.FC = () => {
   let { username } = useParams<ParamTypes>()
   const history = useHistory()
 
-  const getUserData = useCallback(async ()=> {
+  const getUserData = useCallback(async () => {
     try {
       const user = await getUser(username)
       const stars = await getStarred(username)
       const repos = await getRepos(username)
-      const state:UserType = {...user, starred:stars, repos}
+      const state: UserType = { ...user, starred: stars, repos }
       setState(state)
       console.log('finished setState');
-      
-      
-      
+
+
+
     } catch (error) {
       history.push('/')
     }
 
-  }, [history,setState, username])
+  }, [history, setState, username])
   useEffect(() => {
     getUserData()
   }, [getUserData])
@@ -58,9 +58,11 @@ const UserDetail: React.FC = () => {
             </figure>
             <div className="user__info">
               <h1 className="user__title">{user.name}</h1>
-              <p className="user__twitter">@flaquer_</p>
-
-
+              <p className="user__twitter">
+                <a href={`https://twitter.com/${user.twitter_username}`} target="_blank">
+                  {`@${user.twitter_username}`}
+                </a>
+              </p>
               <p className="user__location">
                 <span><img src={LocationIcon} alt="marker" />{user.location}</span>
                 <span><img src={WorkIcon} alt="" />{user.company}</span>
@@ -78,19 +80,19 @@ const UserDetail: React.FC = () => {
           </div>
 
           <div className="user__repos">
-          {user.repos.map((repo:Repository)=> {
-            return (
-              <a href={repo.html_url} className="repo" key={repo.id}>
-                <h3 className="repo__name">{repo.name}</h3>
-                <p className="repo__description">{repo.description}</p>
-                <ul className="repo__data">
-                  <li><img src={StarsIcon} alt="Stars" /> {repo.stars}</li>
-                  <li><img src={ForksIcos} alt="Forks" /> {repo.forks}</li>
-                  <li><img src={LanguageIcon} alt="Language" /> {repo.language}</li>
-                </ul>
-              </a>
-            )
-          })}
+            {user.repos.map((repo: Repository) => {
+              return (
+                <a href={repo.html_url} className="repo" key={repo.id}>
+                  <h3 className="repo__name">{repo.name}</h3>
+                  <p className="repo__description">{repo.description}</p>
+                  <ul className="repo__data">
+                    <li><img src={StarsIcon} alt="Stars" /> {repo.stars}</li>
+                    <li><img src={ForksIcos} alt="Forks" /> {repo.forks}</li>
+                    <li><img src={LanguageIcon} alt="Language" /> {repo.language}</li>
+                  </ul>
+                </a>
+              )
+            })}
           </div>
         </div>
       </div>
