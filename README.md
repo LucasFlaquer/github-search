@@ -46,4 +46,7 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 To learn React, check out the [React documentation](https://reactjs.org/).
 
 ## Sobre o Projeto
-Este projeto é para exercitar os conhecimentos em React.js
+Este projeto é para exercitar os conhecimentos em React.
+
+## o que ele Faz?
+busca os dados do usuário e de seu repositório de acordo com seu username
